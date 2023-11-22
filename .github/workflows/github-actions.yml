@@ -1,15 +1,15 @@
 # 깃허브 액션이름
-name: GitHub Actions Demo
+name: GitHub Actions For My Profile
 # 깃허브 액션 run할때 내부에 적히는 제목
 run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
 # 언제 실행될지
 on:
   push:
     branches:
-      - main
-  # 하루에 한번 cron 실행
-  schedule:
-    - cron: "0 0 * * *"
+      - test
+#   # 하루에 한번 cron 실행
+#   schedule:
+#     - cron: "0 0 * * *"
 
 jobs:
   #job name
@@ -28,10 +28,14 @@ jobs:
         run: npm ci
       - name: Update README
         run: npm start
-      - name: commit and push README.md
+      - name: Commit files
         run: |
-          git add .
           git config --local user.email "qlqjs674@naver.com"
           git config --local user.name "ten-log"
-          git commit -m "update README.md"
-          git push
+          git add .
+          git commit -a -m "Fix: update README.md"
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
