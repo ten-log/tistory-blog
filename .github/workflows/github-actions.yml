@@ -4,6 +4,9 @@ name: GitHub Actions Demo
 run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
 # 언제 실행될지
 on:
+  push:
+    branches:
+      - main
   # 하루에 한번 cron 실행
   schedule:
     - cron: "0 0 * * *"
